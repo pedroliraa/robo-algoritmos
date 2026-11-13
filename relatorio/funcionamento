@@ -1,0 +1,62 @@
+
+# Tarefa 4 — Por que funciona
+
+## Funcionamento da recursão
+
+A função custo(i, j) calcula o menor custo necessário
+para sair da posição (i, j) e chegar ao destino.
+
+Se a posição estiver fora da grade ou for um obstáculo,
+a função retorna infinito.
+
+Se estiver no destino, retorna o custo da própria casa.
+
+Nos demais casos, soma o custo atual ao menor custo
+entre os caminhos pela direita e por baixo.
+
+## Por que o algoritmo termina?
+
+A cada chamada recursiva, o robô avança uma posição
+para a direita ou para baixo.
+
+Como a grade possui tamanho limitado, o algoritmo
+eventualmente encontra o destino, um obstáculo ou
+uma posição fora da grade.
+
+Essas situações são os casos base da recursão e
+impedem chamadas infinitas.
+
+## Por que encontra o menor custo?
+
+Em cada posição, o algoritmo considera as duas
+direções possíveis: direita e baixo.
+
+A função recursiva calcula o menor custo restante
+a partir de cada uma dessas posições.
+
+Depois, utiliza min() para selecionar o menor
+resultado e soma o custo da posição atual.
+
+Como todas as possibilidades válidas são consideradas,
+o algoritmo encontra o menor custo total.
+
+## O que acontece quando não existe caminho?
+
+Quando uma posição está bloqueada ou fora da grade,
+a função retorna infinito.
+
+Se todas as possibilidades forem impossíveis,
+o resultado final também será infinito.
+
+Nesse caso, o programa converte infinito para None,
+indicando que não existe um caminho válido.
+
+## Recursão sem memoização
+
+O algoritmo não utiliza cache, dicionários ou tabelas
+para armazenar os resultados das chamadas.
+
+Uma mesma posição pode ser calculada várias vezes.
+
+Essa abordagem atende à exigência de recursão pura
+definida para a primeira entrega.
