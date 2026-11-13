@@ -12,9 +12,9 @@ e compara com uma **regra gulosa**.
 | Pessoa | Parte | Nome |
 |---|---|---|
 | 1 | Base, `resolver`, integração e montagem do relatório | |
-| 1 | Descrição do problema + `validar` e testes de entrada inválida | |
+| 2 | Descrição do problema + `validar` e testes de entrada inválida | |
 | 2 | `recursivo`, testes ok/sem_caminho e "por que funciona" | |
-| 2 | `contar_chamadas` e `guloso` | |
+| 1 | `contar_chamadas` e `guloso` | |
 
 ## Requisitos
 
