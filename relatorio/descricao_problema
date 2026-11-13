@@ -1,0 +1,79 @@
+
+ Tarefa 1 — Descrição do problema
+
+## Situação
+
+O projeto consiste em encontrar o caminho de menor custo
+para um robô que se movimenta em uma grade.
+
+O robô começa na posição (0, 0), no canto superior esquerdo,
+e precisa chegar ao canto inferior direito.
+
+Cada posição possui um custo inteiro positivo ou pode ser
+um obstáculo, representado por null no JSON.
+
+## Entrada
+
+A entrada é um texto JSON contendo a chave "custos",
+que armazena uma matriz de valores.
+
+Exemplo:
+
+{"custos": [[2, 1], [3, 4]]}
+
+## Saída
+
+O programa retorna um dicionário com um dos estados:
+
+- "ok": existe um caminho, e o menor custo é retornado.
+- "sem_caminho": não existe rota possível.
+- "entrada_invalida": o formato da entrada está incorreto.
+
+## Objetivo
+
+Encontrar o menor custo possível para o robô chegar ao
+destino, utilizando recursão pura, sem memoização.
+
+## Regras
+
+1. O robô só pode andar para a direita ou para baixo.
+2. Não pode sair dos limites da grade.
+3. Não pode atravessar obstáculos.
+4. O custo inclui todas as casas visitadas.
+5. Os valores devem ser inteiros positivos ou null.
+6. Todas as linhas devem possuir o mesmo tamanho.
+
+## Exemplo próprio 1 — Sem caminho
+
+{"custos": [[2, 3, 1], [null, 4, null], [1, null, 5]]}
+
+Apesar de a entrada ser válida, não existe caminho até
+o destino. O robô fica bloqueado pelos obstáculos.
+
+Resultado:
+
+{"status": "sem_caminho", "custo": null}
+
+## Exemplo próprio 2 — Entrada inválida
+
+{"custos": [[1, 2], [3]]}
+
+A segunda linha possui menos elementos que a primeira.
+Portanto, a matriz não é retangular.
+
+Resultado:
+
+{"status": "entrada_invalida",
+ "erro": "a linha 1 tem tamanho diferente"}
+
+## Validação
+
+A função validar utiliza json.loads e try/except para
+interpretar o JSON e identificar erros de sintaxe.
+
+Depois, verifica o formato da matriz e os valores
+permitidos.
+
+Utilizamos type(v) is int para rejeitar booleanos,
+pois em Python True também é considerado um int
+quando utilizamos isinstance.
