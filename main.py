@@ -1,50 +1,37 @@
-
+from robo.resolver import resolver
 from robo.contagem import contar_chamadas
 from robo.guloso import guloso
-from robo.resolver import resolver
+from robo.recursivo import recursivo
 
-EXEMPLO_TEXTO = '{"custos": [[2,1,9,9,9],[3,null,1,1,9],[1,1,1,null,2],[9,9,1,1,1]]}'
-EXEMPLO_MAPA = [[2, 1, 9, 9, 9],
-                [3, None, 1, 1, 9],
-                [1, 1, 1, None, 2],
-                [9, 9, 1, 1, 1]]
+EXEMPLO = [[2, 1, 9, 9, 9],
+           [3, None, 1, 1, 9],
+           [1, 1, 1, None, 2],
+           [9, 9, 1, 1, 1]]
+
+GRADE_PROPRIA = [[2, 1, 8],
+                 [3, 9, 9],
+                 [2, 1, 1]]
 
 
 def grade_de_uns(linhas, colunas):
-    """Grade só com 1s, usada na tabela de contagem."""
     return [[1] * colunas for _ in range(linhas)]
 
 
-def tentar(funcao, *args):
-    """Chama a função; se ainda não foi implementada, avisa em vez de quebrar."""
-    try:
-        return funcao(*args)
-    except NotImplementedError:
-        return "pendente"
-
-
 def main():
-    print("=== Exemplo do enunciado ===")
-    print("resolver:", tentar(resolver, EXEMPLO_TEXTO), "  (esperado: custo 11)")
-    print("guloso:  ", tentar(guloso, EXEMPLO_MAPA), "  (esperado: 26)")
+    print("=== Grade do exemplo ===")
+    entrada = '{"custos": [[2,1,9,9,9],[3,null,1,1,9],[1,1,1,null,2],[9,9,1,1,1]]}'
+    print("resolver :", resolver(entrada))
+    print("guloso   :", guloso(EXEMPLO), "(recursivo:", recursivo(EXEMPLO), ")")
 
-    print()
-    print("=== Contagem de chamadas da recursão ===")
-    print(f"{'Grade':<10}{'Chamadas':>12}{'Referência':>14}")
-    grades = [
-        ("2x3", grade_de_uns(2, 3), "9"),
-        ("3x3", grade_de_uns(3, 3), "19"),
-        ("6x6", grade_de_uns(6, 6), "923"),
-        ("10x10", grade_de_uns(10, 10), "184.755"),
-        ("1x10", grade_de_uns(1, 10), "10"),
-        ("exemplo", EXEMPLO_MAPA, "43*"),
-    ]
-    for nome, grade, referencia in grades:
-        chamadas = tentar(contar_chamadas, grade)
-        if isinstance(chamadas, int):
-            chamadas = f"{chamadas:,}".replace(",", ".")
-        print(f"{nome:<10}{str(chamadas):>12}{referencia:>14}")
-    print("* 43 contando também as chamadas que caem em obstáculo (ver escopo).")
+    print("\n=== Grade própria onde o guloso erra ===")
+    print("recursivo (ótimo):", recursivo(GRADE_PROPRIA))
+    print("guloso           :", guloso(GRADE_PROPRIA))
+
+    print("\n=== Contagem de chamadas ===")
+    print(f"{'Grade':<10}{'Chamadas':>10}")
+    for l, c in [(2, 3), (3, 3), (6, 6), (10, 10), (1, 10)]:
+        print(f"{l}x{c:<8}{contar_chamadas(grade_de_uns(l, c)):>10,}".replace(",", "."))
+    print(f"{'Exemplo':<10}{contar_chamadas(EXEMPLO):>10}")
 
 
 if __name__ == "__main__":
